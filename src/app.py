@@ -76,8 +76,9 @@ combined__weekly_data = pd.concat(
     [Ayla_data.weekly_data, Amelia_data.weekly_data],
     )
 
+app = create_dash_app(combined_data, combined_daily_data, combined__weekly_data )
+server = app.server
+
 # Create Dash app
 if __name__ == "__main__":
-    app = create_dash_app(combined_data, combined_daily_data, combined__weekly_data )
     app.run(debug=True, use_reloader=False, port=8051)
-    server = app.server
