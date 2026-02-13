@@ -146,5 +146,7 @@ werkzeug==3.1.5
     # via
     #   dash
     #   flask
+xlrd==2.0.1 
+    # via pandas
 zipp==3.23.0
     # via importlib-metadata

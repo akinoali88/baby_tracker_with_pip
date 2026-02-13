@@ -9,7 +9,7 @@ from dash_bootstrap_templates import load_figure_template
 import pandas as pd
 
 
-from app.dashboard_logic import get_slider_params
+from app_input.dashboard_logic import get_slider_params
 from .components import (
     render_home_tab,
     render_individual_feeds_tab,

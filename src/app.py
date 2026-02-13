@@ -34,7 +34,7 @@ Note:
 import pandas as pd
 
 from pipeline.data_pipeline import DataPipeline
-from app.app_factory import create_dash_app
+from app_input.app_factory import create_dash_app
 from models.children import settings
 
 # Run data pipelines for each child
