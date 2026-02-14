@@ -3,11 +3,9 @@ Generated Dash application factory module.
 Includes functions to create Plotly figures and initialize the Dash app.
 '''
 
-from dash import Dash, dcc
+from dash import dcc
 import dash_bootstrap_components as dbc
-from dash_bootstrap_templates import load_figure_template
 import pandas as pd
-
 
 from app_input.dashboard_logic import get_slider_params
 from .components import (
@@ -19,7 +17,7 @@ from .components import (
 
 def create_dash_app(df: pd.DataFrame,
                     daily_df: pd.DataFrame,
-                    weekly_df: pd.DataFrame) -> Dash:
+                    weekly_df: pd.DataFrame) -> dbc.Container:
     '''
     Create and configure a Dash application for baby feeding schedule visualization.
 
@@ -30,7 +28,7 @@ def create_dash_app(df: pd.DataFrame,
         daily_df : pd.DataFrame
             DataFrame containing daily feeding data with columns 
                 including 'age_in_weeks' and 'name'.
-            Each row represents a single feeding event.
+            Eapythch row represents a single feeding event.
         weekly_df : pd.DataFrame
             DataFrame containing weekly aggregated feeding data, setting out
             the weekly volume of night versus day feeds per child. 
@@ -39,7 +37,7 @@ def create_dash_app(df: pd.DataFrame,
 
     Returns:
         Dash
-            Configured Dash application instance with interactive layout, callbacks, and graphs.
+            layout, callbacks, and graphs for a Dash application that visualizes baby feeding data.
             The app includes a range slider for filtering data by age (in weeks) and dynamically
             updates two feed volume charts and a text display based on slider selection.
 
@@ -51,18 +49,13 @@ def create_dash_app(df: pd.DataFrame,
         slider range is modified by the user.
     '''
 
-    # load bootstrap figure templates
-    load_figure_template('minty')
-    dbc_css = 'https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css'
-
-    app = Dash(__name__, external_stylesheets=[dbc.themes.MINTY, dbc_css, dbc.icons.BOOTSTRAP])
 
     # get slider params
     slider_parameters = get_slider_params(daily_df)
     default_child = slider_parameters['children']['value']
 
     # Define the app layout
-    app.layout = dbc.Container([
+    layout = dbc.Container([
 
             # Store the data as JSON in the browser/app state
             dcc.Store(id='stored-main-data', data=df.to_json(orient='records')),
@@ -99,4 +92,4 @@ def create_dash_app(df: pd.DataFrame,
         className='bg-success',
         style={'minHeight': '100vh'}) # Close dbc.Container
 
-    return app
+    return layout

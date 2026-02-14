@@ -32,6 +32,10 @@ Note:
 '''
 
 import pandas as pd
+from dash_bootstrap_templates import load_figure_template
+from dash import Dash
+import dash_bootstrap_components as dbc
+
 
 from pipeline.data_pipeline import DataPipeline
 from app_input.app_factory import create_dash_app
@@ -76,7 +80,13 @@ combined__weekly_data = pd.concat(
     [Ayla_data.weekly_data, Amelia_data.weekly_data],
     )
 
-app = create_dash_app(combined_data, combined_daily_data, combined__weekly_data )
+# load bootstrap figure templates
+load_figure_template('minty')
+dbc_css = 'https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css'
+
+app = Dash(__name__, external_stylesheets=[dbc.themes.MINTY, dbc_css, dbc.icons.BOOTSTRAP])
+
+app.layout = create_dash_app(combined_data, combined_daily_data, combined__weekly_data )
 server = app.server
 
 # Create Dash app
